@@ -6,10 +6,10 @@ const authController = async (req, res) => {
     const user = await User.findOne({ where: { email }})
 
     if(!user) {
-        return res.status(401).json({ msg: 'Usuario inexistente'})
+        return res.status(401).json({ error: 'Usuario inexistente'})
     }
     if(!(await user.checkPassword(password))){
-        return res.status(401).json({ msg: 'senha incorreta'})
+        return res.status(401).json({ error: 'senha incorreta'})
     }
         return res.json({ 
             user,
