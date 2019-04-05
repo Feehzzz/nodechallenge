@@ -1,4 +1,5 @@
 const { User } = require('../models');
+ 
 
 const authController = async (req, res) => {
     const { email, password } = req.body
@@ -11,9 +12,10 @@ const authController = async (req, res) => {
     if(!(await user.checkPassword(password))){
         return res.status(401).json({ error: 'senha incorreta'})
     }
+        user.password = undefined;
         return res.json({ 
             user,
-            token: user.generateToken 
+            token: user.generateToken() 
         });
 }
 

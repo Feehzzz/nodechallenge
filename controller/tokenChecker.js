@@ -15,7 +15,7 @@ module.exports = async  (req, res, next) => {
         req.userId = decoded.id;
 
         return next();
-    } catch(err){
+    }catch(err){
         return res.status(401).send({ error: 'Token Invalido' });
     };
 };
