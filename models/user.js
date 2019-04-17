@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, Datatypes) => {
     const User = sequelize.define('User', {
-        name: Datatypes.STRING,
         email: Datatypes.STRING,
         password: Datatypes.STRING
     }, 
@@ -21,7 +20,8 @@ module.exports = (sequelize, Datatypes) => {
         return bcrypt.compare(password, this.password)
     };
     User.prototype.generateToken = function (){
-        return jwt.sign({ id: this.id }, process.env.SECRET);
+        return jwt.sign({ id: this.id, expiresIn: 100  }, process.env.SECRET);
     };
     return User;
 }
+

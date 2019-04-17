@@ -2,19 +2,26 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Orders', {
+    return queryInterface.createTable('Carts', {
       uuid: {
         type: Sequelize.UUID,
         primaryKey: true,
         allowNull: false,
+        defaultValue: Sequelize.UUIDV4
       },
-      products: {
-        type: Sequelize.STRING,
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: 'Users', key: 'id' }
+      },
+      productId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'Products', key:'id' }
       },
       priceUnit: {
         type: Sequelize.FLOAT,
-        allowNull: false,
+        allowNull: false
       },
       qty: {
         type: Sequelize.REAL,
@@ -27,14 +34,12 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false
-      },
-      userId: {
-        type: Sequelize.INTEGER
       }
+      
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Orders');
+    return queryInterface.dropTable('Carts');
   }
 };
