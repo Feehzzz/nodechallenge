@@ -9,22 +9,22 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4
       },
-      userId: {
+      customer: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Users', key: 'id' }
       },
-      productId: {
+      product: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'Products', key:'id' }
       },
-      priceUnit: {
+      price: {
         type: Sequelize.FLOAT,
         allowNull: false
       },
       qty: {
-        type: Sequelize.REAL,
+        type: Sequelize.FLOAT,
         allowNull: false
       },
       created_at: {

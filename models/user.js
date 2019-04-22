@@ -20,8 +20,13 @@ module.exports = (sequelize, Datatypes) => {
         return bcrypt.compare(password, this.password)
     };
     User.prototype.generateToken = function (){
-        return jwt.sign({ id: this.id, expiresIn: 100  }, process.env.SECRET);
+        return jwt.sign({ id: this.id }, process.env.SECRET, {
+            expiresIn: 18000
+        })
+        
     };
+    
+    
     return User;
 }
 

@@ -8,7 +8,7 @@ const addController = (req, res) => {
     }).then(function(){
         res.send('Produto cadastrado')
     }).catch(function(err){
-        res.send( {err: 'Error ao cadastrar produto' })
+        return res.status(400).send({err: 'Error ao cadastrar produto' })
 
     })}
 module.exports = addController;

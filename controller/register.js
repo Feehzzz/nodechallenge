@@ -16,6 +16,7 @@ const registerController = async (req, res) => {
             token: user.generateToken({ id: user.id }),
         });
     }catch (err) {
+        
         return res.status(400).send ({ error: 'Registration fail' });
         
     }
