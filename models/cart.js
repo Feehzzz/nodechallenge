@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       product: DataTypes.INTEGER,
       price: DataTypes.FLOAT,
       qty: DataTypes.FLOAT,
+      
     });
+    
+    
     return Cart;
   };

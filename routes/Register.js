@@ -1,6 +1,8 @@
+const routes = require('express').Router()
 const { User } = require('../models');
 
-const registerController = async (req, res) => {
+// Rota para registro de usuários 
+routes.post('/',  async (req, res) => {
     const { email } = req.body;
     
     try {
@@ -21,6 +23,6 @@ const registerController = async (req, res) => {
         
     }
     
-};
+});
 
-module.exports = registerController;
+module.exports = routes;
