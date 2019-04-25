@@ -11,15 +11,15 @@ module.exports = {
       },
       product: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false, 
       },
       price: {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      manufacturer: {
-        type: Sequelize.STRING,
-        allowNull: false
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,

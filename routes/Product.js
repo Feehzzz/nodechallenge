@@ -1,26 +1,38 @@
 const routes = require('express').Router()
 const { Product } = require('../models');
 
+
+// Listagem dos produtos cadastrados ao db
 routes.get('/', (req, res) =>{
-    Product.findAll().then(function(products){
-        res.json({user: req.userId, product: products})
+    Product.findAll()
+    .then((products)=> {
+        res.json({product: products})
     })
 });
 
-// Rota para cadastrar produtos ao db
-routes.post('/', (req, res) => {
-    Product.create({
-        product: req.body.product,
-        price: req.body.price,
-        manufacturer: req.body.manufacturer
-    }).then(function(){
-        res.send('Produto cadastrado')
-    }).catch(function(err){
-        console.log(err)
-        return res.status(400).send({err: 'Error ao cadastrar produto' })
-
+//  Cadastrar produtos ao db
+routes.post('/', async  (req, res) => {
+    const { product, price, quantity } = req.body
+    
+    await Product.findOne({
+        where: {
+            product: product
+        }
+    }).then((product) => {
+        product.update(
+            {price: product.price = price },
+            {where: product.id},
+        )
+        product.update(
+            {quantity: product.quantity += quantity },
+            {where: product.id}
+        )
+        res.send('Updated successfully')
+    }).catch((err) =>{
+        Product.create(req.body)
+        return res.send('New Product created') 
     })
-
-}); 
-
+     
+});
+    
 module.exports = routes;

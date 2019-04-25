@@ -17,15 +17,22 @@ module.exports = {
       product: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'Products', key:'id' }
+        
+      },
+      description:{
+        type: Sequelize.STRING
       },
       price: {
         type: Sequelize.FLOAT,
-        allowNull: false
+        allowNull: false,
       },
       qty: {
         type: Sequelize.FLOAT,
         allowNull: false
+      },
+      total: {
+        type: Sequelize.FLOAT,
+        defaultValue: 0
       },
       created_at: {
         type: Sequelize.DATE,

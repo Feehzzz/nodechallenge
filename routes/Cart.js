@@ -1,27 +1,55 @@
 const routes = require('express').Router()
-const { Cart } = require('../models');
+const { Cart, Product } = require('../models');
 
 // Criar carrinho/comprar
 routes.post('/', (req, res) => {
-    Cart.create({
-        customer: req.userId,
-        product: req.body.product,
-        price: req.body.price,
-        qty: req.body.qty
-
-    }).then(function(){
-        res.send('Carrinho cadastrado')
-    }).catch(function(err){
-        console.log(err)
+    customer = req.userId
+    const { product, qty } = req.body
+     
+    Product.findOne({
+        where: {
+            id: product
+        }
+    })
+    .then((products) => {
+        if(products && customer){
+            Cart.create({
+                customer: customer,
+                description: products.product,
+                product: product,
+                price: products.price,
+                qty: qty,
+                total: (products.price * qty) 
+            })
+            products.update(
+                { quantity: (products.quantity - qty )},
+                {where: products.id})
+            res.send('Purchased successfully!')  
+            
+                                   
+        } 
+        else {
+            res.status(404).send('Product not found / Wrong id')
+        }
         
-        return res.status(400).send({error: 'Erro ao criar carrinho' })
+    })
+    .catch((err) => {
+        res.send(err)
     })
 })
 
+
 // Listagem de carrinhos/compras
 routes.get('/', (req, res) =>{
-    Cart.findAll().then(function(carts){
-        res.json({ cart:carts})
+    Cart.findAll({
+        where: {
+            customer: req.userId
+        }
+    }).then((cart) => {
+        
+        res.json(cart)
+    }).catch((err) =>{
+        return res.send('fon') 
     })
 });
 

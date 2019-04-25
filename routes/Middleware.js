@@ -6,7 +6,7 @@ module.exports = async  (req, res, next) => {
        
 
     if(!authHeader)
-        return res.status(401).send({ error: 'Token não informado' });
+        return res.status(401).send({ error: 'Token not provided' });
 
     const [, token ] = authHeader.split(' ');
     // verifica se o token possui o bearer por padrão do jwt
@@ -16,6 +16,7 @@ module.exports = async  (req, res, next) => {
 
         return next();
     }catch(err){
-        return res.status(401).send({ error: 'Token Invalido' });
+        return res.status(401).send({ error: 'Invalid Token' });
     };
+
 };

@@ -7,7 +7,7 @@ routes.post('/',  async (req, res) => {
     
     try {
         if (await User.findOne ({ where: {email} }))
-            return res.status(400).send({ error: 'Email já cadastrado' });
+            return res.status(400).send({ error: 'Email already exists' });
 
         const user = await User.create(req.body);  
         // evitando o retorno da senha ao criar cadastro
