@@ -12,7 +12,15 @@ module.exports = (sequelize, DataTypes) => {
       product: DataTypes.INTEGER,
       description: DataTypes.STRING,
       price: DataTypes.FLOAT,
-      qty: DataTypes.FLOAT,
+      qty: {
+        type:DataTypes.FLOAT,
+        validate: {
+          not: {
+            args: ["[a-z]",'i'],
+            msg:' Only numbers'
+          }
+        }
+      },
       total: DataTypes.FLOAT
       
     });

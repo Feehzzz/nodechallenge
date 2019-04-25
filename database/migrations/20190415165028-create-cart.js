@@ -17,10 +17,10 @@ module.exports = {
       product: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        
+        references: { model: 'Products', key: 'id' }
       },
-      description:{
-        type: Sequelize.STRING
+      description: {
+        type: Sequelize.STRING,
       },
       price: {
         type: Sequelize.FLOAT,
@@ -28,7 +28,7 @@ module.exports = {
       },
       qty: {
         type: Sequelize.FLOAT,
-        allowNull: false
+        allowNull: false,
       },
       total: {
         type: Sequelize.FLOAT,

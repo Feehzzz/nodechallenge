@@ -11,30 +11,28 @@ routes.post('/', (req, res) => {
             id: product
         }
     })
-    .then((products) => {
-        if(products && customer){
+    .then((item) => {
+        if(qty <= item.quantity && 1 <= qty){
             Cart.create({
                 customer: customer,
-                description: products.product,
+                description: item.product,
                 product: product,
-                price: products.price,
+                price: item.price,
                 qty: qty,
-                total: (products.price * qty) 
+                total: (item.price * qty) 
             })
-            products.update(
-                { quantity: (products.quantity - qty )},
-                {where: products.id})
+            item.update(
+                { quantity: (item.quantity - qty )},
+                { where: item.id})
             res.send('Purchased successfully!')  
-            
-                                   
+                                 
         } 
         else {
-            res.status(404).send('Product not found / Wrong id')
-        }
-        
+            res.status(400).send('No stock available')
+        } 
     })
     .catch((err) => {
-        res.send(err)
+        res.status(400).send('Product not found')
     })
 })
 
@@ -46,10 +44,9 @@ routes.get('/', (req, res) =>{
             customer: req.userId
         }
     }).then((cart) => {
-        
         res.json(cart)
-    }).catch((err) =>{
-        return res.send('fon') 
+    }).catch((err) => {
+        return res.send('error during retrieving cart' +err) 
     })
 });
 

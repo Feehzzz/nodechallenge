@@ -14,6 +14,8 @@ routes.get('/', (req, res) =>{
 routes.post('/', async  (req, res) => {
     const { product, price, quantity } = req.body
     
+    
+    
     await Product.findOne({
         where: {
             product: product
@@ -28,9 +30,14 @@ routes.post('/', async  (req, res) => {
             {where: product.id}
         )
         res.send('Updated successfully')
-    }).catch((err) =>{
-        Product.create(req.body)
-        return res.send('New Product created') 
+    }).catch((err) => {
+        Product.create({
+            product: product.toLowerCase(),
+            price: price,
+            quantity: quantity
+        })
+        
+        return res.send('New product created') 
     })
      
 });

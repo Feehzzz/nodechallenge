@@ -19,8 +19,7 @@ routes.post('/',  async (req, res) => {
         });
     }catch (err) {
         
-        return res.status(400).send ({ error: 'Registration fail' });
-        
+        return res.status(400).send ({err: 'Registration fail ' + err })
     }
     
 });

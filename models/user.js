@@ -3,8 +3,29 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, Datatypes) => {
     const User = sequelize.define('User', {
-        email: Datatypes.STRING,
-        password: Datatypes.STRING
+        email: {
+        type: Datatypes.STRING,
+        validate:  {
+            notEmpty: {
+                msg: 'Cannot be blank'
+            },
+            isEmail: {
+                msg: 'Must be a valid mail'
+            }
+        }
+        },
+        password: {
+        type: Datatypes.STRING,
+        validate: {
+            notEmpty: {
+                msg: 'Cannot be blank'               
+            },
+            len: {
+                args: [4,10],
+                msg: 'Pass must contain between 4 and 10 characters'
+            }
+        } 
+    }
     }, 
     {
         hooks: {
@@ -29,4 +50,3 @@ module.exports = (sequelize, Datatypes) => {
     
     return User;
 }
-

@@ -20,6 +20,11 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'type a valid quantity'
+          },
+        }
       },
       created_at: {
         type: Sequelize.DATE,
