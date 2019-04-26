@@ -10,34 +10,32 @@ routes.get('/', (req, res) =>{
     })
 });
 
+
 //  Cadastrar produtos ao db
-routes.post('/', async  (req, res) => {
+routes.post('/', (req, res) => {
     const { product, price, quantity } = req.body
     
-    
-    
-    await Product.findOne({
-        where: {
-            product: product
+    Product.findOne({
+        where: {product}
+    }).then((item) => {
+        if(item){
+            Product.update(
+                {quantity: item.quantity + quantity },
+                {where:{id: item.id}}
+            )
+            Product.update(
+                {price: item.price = price},
+                {where:{id: item.id}}
+            )
+            return res.send('Updated successfully ')
+        } else {
+            Product.create(req.body)
+            return res.send('New item added')
         }
-    }).then((product) => {
-        product.update(
-            {price: product.price = price },
-            {where: product.id},
-        )
-        product.update(
-            {quantity: product.quantity += quantity },
-            {where: product.id}
-        )
-        res.send('Updated successfully')
-    }).catch((err) => {
-        Product.create({
-            product: product.toLowerCase(),
-            price: price,
-            quantity: quantity
-        })
         
-        return res.send('New product created') 
+    }).catch((err) => {
+        console.log(err)
+        return res.status(400).send('Algo deu errado ' + err)
     })
      
 });
